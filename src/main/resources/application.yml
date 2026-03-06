@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gts-gateway
+  profiles:
+    active: dev
+
+  cloud:
+    gateway:
+      routes:
+        - id: collector-contents
+          uri: lb://gts-collector-service
+          predicates:
+            - Path=/api/v1/contents/**
+
+        - id: collector-feed
+          uri: lb://gts-collector-service
+          predicates:
+            - Path=/api/v1/collector/**
+
+        - id: collector-rss-sources
+          uri: lb://gts-collector-service
+          predicates:
+            - Path=/api/v1/rss-sources/**
+
+        - id: ai-summary-service
+          uri: lb://gts-ai-summary-service
+          predicates:
+            - Path=/api/v1/summarize/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
