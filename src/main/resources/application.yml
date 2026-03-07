@@ -25,6 +25,16 @@ spring:
           predicates:
             - Path=/api/v1/rss-sources/**
 
+        - id: collector-tags
+          uri: lb://gts-collector-service
+          predicates:
+            - Path=/api/v1/tags/**
+
+        - id: collector-access-logs
+          uri: lb://gts-collector-service
+          predicates:
+            - Path=/api/v1/access-logs/**
+
         - id: ai-summary-service
           uri: lb://gts-ai-summary-service
           predicates:
